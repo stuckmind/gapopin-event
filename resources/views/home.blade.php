@@ -35,7 +35,7 @@
 <section id="events" class="py-16 bg-gray-50">
     <div class="max-w-7xl mx-auto px-6">
         <h2 class="text-3xl font-bold text-center mb-10 text-gray-800">Daftar Event</h2>
-
+        
         <div class="grid gap-8 md:grid-cols-3">
             @foreach ($events as $event)
                 <div class="bg-white shadow-lg rounded-xl overflow-hidden hover:shadow-2xl transition duration-300 transform hover:-translate-y-1">
