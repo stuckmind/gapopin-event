@@ -4,7 +4,7 @@
     <div class="max-w-4xl mx-auto px-6">
         <!-- Card Event -->
         <div class="bg-white shadow-lg rounded-xl overflow-hidden mb-12">
-            <img src="{{ env('ADMIN_URL') . '/storage/' . $event->poster }}" 
+            <img src="{{ asset('storage/' . $event->poster) }}" 
                  alt="{{ $event->title }}" 
                  class="w-full h-72 object-cover">
             <div class="p-6">

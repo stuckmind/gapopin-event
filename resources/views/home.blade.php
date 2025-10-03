@@ -40,7 +40,7 @@
             @foreach ($events as $event)
                 <div class="bg-white shadow-lg rounded-xl overflow-hidden hover:shadow-2xl transition duration-300 transform hover:-translate-y-1">
                     <div class="relative">
-                        <img src="{{ env('ADMIN_URL') . '/storage/' . $event->poster }}" 
+                        <img src="{{ asset('storage/' . $event->poster) }}" 
                              alt="{{ $event->title }}" 
                              class="h-56 w-full object-cover">
                         <span class="absolute top-3 left-3 bg-blue-600 text-white text-xs font-semibold px-2 py-1 rounded">Event</span>

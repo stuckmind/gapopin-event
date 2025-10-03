@@ -8,12 +8,7 @@ export default defineConfig({
             refresh: true,
         }),
     ],
-    server: {
-        host: '127.0.0.1',
-        port: 5174, // ini tetap Vite, nggak bentrok sama Laravel
-        hmr: {
-            host: '127.0.0.1',
-            port: 5173,
-        },
+    build: {
+        sourcemap: false,
     },
 });
