@@ -18,7 +18,7 @@
         <a href="{{ route('management-event.index') }}" class="flex items-center px-3 py-2 rounded-md transition {{ request()->routeIs('management-event.*') ? 'bg-indigo-600' : 'hover:bg-indigo-600' }}">
             <i class="fa-solid fa-calendar-check mr-2"></i> Event
         </a>
-        <a href="#" class="flex items-center px-3 py-2 rounded-md transition hover:bg-indigo-600">
+        <a href="{{ route('registrasi-event.index') }}" class="flex items-center px-3 py-2 rounded-md transition {{ request()->routeIs('registrasi-event.*') ? 'bg-indigo-600' : 'hover:bg-indigo-600' }}">
             <i class="fa-solid fa-users mr-2"></i> Registrasi
         </a>
         <a href="#" class="flex items-center px-3 py-2 rounded-md transition hover:bg-indigo-600">

@@ -6,6 +6,7 @@ use App\Models\Event;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Response;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
@@ -94,7 +95,11 @@ class ManagementEventController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $event = Event::findOrFail($id);
+        return view('admin.management-event.management-event-edit', [
+            'title' => 'Edit Event ' . $event->title,
+            'event' => $event
+        ]);
     }
 
     /**
@@ -102,7 +107,32 @@ class ManagementEventController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $event = Event::findOrFail($id);
+
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'location' => 'required|string|max:255',
+            'tanggal' => 'required|date',
+            'poster' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+        ]);
+
+        // Update slug & kode event (kode tidak berubah)
+        $validated['slug'] = strtoupper(str_replace(' ', '-', $validated['title']));
+
+        // Jika ada upload poster baru
+        if ($request->hasFile('poster')) {
+            // Hapus poster lama
+            if ($event->poster && Storage::exists('public/' . $event->poster)) {
+                Storage::delete('public/' . $event->poster);
+            }
+
+            $path = $request->file('poster')->store('event-posters', 'public');
+            $validated['poster'] = $path;
+        }
+
+        $event->update($validated);
+
+        return redirect()->route('management-event.index')->with('success', 'Event berhasil diperbarui!');
     }
 
     /**
@@ -110,6 +140,16 @@ class ManagementEventController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $event = Event::findOrFail($id);
+
+        // Hapus poster dari storage kalau ada
+        if ($event->poster && Storage::exists('public/' . $event->poster)) {
+            Storage::delete('public/' . $event->poster);
+        }
+
+        $event->delete();
+
+        return redirect()->route('management-event.index')
+            ->with('success', 'Event berhasil dihapus!');
     }
 }
