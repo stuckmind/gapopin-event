@@ -57,7 +57,7 @@
                             {{ $event->location }}
                         </div>
 
-                        <a href="{{ route('event.detail', ['slug' => $event->slug]) }}"
+                        <a href="{{ route('registrasi.form', ['slug' => $event->slug]) }}"
                            class="inline-block px-5 py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition">
                             Detail
                         </a>

@@ -19,10 +19,19 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [WebController::class, 'index'])->name('home');
 
-Route::get('/event/{slug}', [EventController::class, 'detail'])->name('event.detail');
-Route::post('/event/{slug}/registrasi', [EventController::class, 'processRegistration'])->name('event.register');
-Route::get('/registrasi/{kode_registrasi}/detail', [RegistrasiController::class, 'detail'])->name('registrasi.detail');
-Route::get('/registrasi/{kode_registrasi}/download', [RegistrasiController::class, 'download'])->name('registrasi.download');
+// Event Registration Form
+Route::prefix('event')->group(function () {
+    Route::get('{slug}', [RegistrasiController::class, 'form'])->name('registrasi.form');
+    Route::post('{slug}/registrasi', [RegistrasiController::class, 'processRegistration'])->name('registrasi.process');
+});
+
+// Registrasi Routes
+Route::prefix('registrasi')->name('registrasi.')->group(function () {
+    Route::get('/search', [RegistrasiController::class, 'index'])->name('search');
+    Route::post('/search', [RegistrasiController::class, 'searchProcess'])->name('search.process');
+    Route::get('/{kode_registrasi}/detail', [RegistrasiController::class, 'detail'])->name('detail');
+    Route::get('/{kode_registrasi}/download', [RegistrasiController::class, 'download'])->name('download');
+});
 
 Route::get('/login', [AuthController::class, 'index'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.submit');

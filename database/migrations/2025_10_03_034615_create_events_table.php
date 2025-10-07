@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('slug')->unique();
             $table->string('location');
             $table->date('tanggal');
+            $table->string('file_name_tag');
             $table->timestamps();
         });
     }

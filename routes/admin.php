@@ -11,6 +11,7 @@
 */
 
 use App\Http\Controllers\Admin\Dashboard\DashboardController;
+use App\Http\Controllers\Admin\LaporanEvent\LaporanEventController;
 use App\Http\Controllers\Admin\ManagementEvent\ManagementEventController;
 use App\Http\Controllers\Admin\RegistrasiEvent\RegistrasiEventController;
 use Illuminate\Support\Facades\Route;
@@ -26,5 +27,11 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/{slug}', [RegistrasiEventController::class, 'registrasi'])->name('detail');
         Route::post('/scan', [RegistrasiEventController::class, 'scan'])->name('scan');
         Route::get('/{id}/print', [RegistrasiEventController::class, 'print'])->name('print');
+    });
+
+    Route::prefix('laporan-event')->name('laporan-event.')->group(function () {
+        Route::get('/', [LaporanEventController::class, 'index'])->name('index');
+        Route::get('/{slug}', [LaporanEventController::class, 'detail'])->name('detail');
+        Route::get('/{event}/export', [LaporanEventController::class, 'exportPdf'])->name('export');
     });
 });

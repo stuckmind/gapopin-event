@@ -16,12 +16,11 @@ return new class extends Migration
             $table->string('kode_registrasi')->unique();
             $table->string('kode_event');
             $table->foreign('kode_event')->references('kode_event')->on('events')->onDelete('cascade');
-
             $table->string('nama');
             $table->string('nama_optik');
             $table->string('email');
             $table->string('no_whatsapp');
-            $table->text('alamat');
+            $table->string('wilayah');
             $table->enum('kategori', ['pengurus', 'anggota', 'visitor'])->default('visitor');
             $table->boolean('kehadiran')->default(false);
             $table->timestamps();

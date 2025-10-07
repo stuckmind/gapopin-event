@@ -23,6 +23,7 @@
                         <th class="px-4 py-3 text-left font-medium text-gray-600">Optik</th>
                         <th class="px-4 py-3 text-left font-medium text-gray-600">Email</th>
                         <th class="px-4 py-3 text-left font-medium text-gray-600">No WA</th>
+                        <th class="px-4 py-3 text-left font-medium text-gray-600">Daerah</th>
                         <th class="px-4 py-3 text-left font-medium text-gray-600">Tanggal Daftar</th>
                         <th class="px-4 py-3 text-center font-medium text-gray-600">Kehadiran</th>
                         <th class="px-4 py-3 text-center font-medium text-gray-600">Action</th>
@@ -37,8 +38,9 @@
                             <td class="px-4 py-3 text-gray-600">{{ $item->nama_optik }}</td>
                             <td class="px-4 py-3 text-gray-600">{{ $item->email }}</td>
                             <td class="px-4 py-3 text-gray-600">{{ $item->no_whatsapp }}</td>
+                            <td class="px-4 py-3 text-gray-600">{{ $item->wilayah }}</td>
                             <td class="px-4 py-3 text-gray-600">
-                                {{ \Carbon\Carbon::parse($item->created_at)->format('d M Y, H:i') }}
+                                {{ \Carbon\Carbon::parse($item->created_at)->locale('id')->translatedFormat('d F Y, H:i') }}
                             </td>
                             <td class="px-4 py-3 text-center">
                                 @if ($item->kehadiran)

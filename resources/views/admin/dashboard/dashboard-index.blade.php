@@ -10,7 +10,7 @@
     <!-- Menu Grid -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         <!-- Card 1 -->
-        <a href="#" class="bg-white rounded-lg shadow hover:shadow-lg transition p-6 flex items-center">
+        <a href="{{ route('management-event.index') }}" class="bg-white rounded-lg shadow hover:shadow-lg transition p-6 flex items-center">
             <div class="p-3 rounded-full bg-indigo-100 text-indigo-600 mr-4">
                 <i class="fa-solid fa-calendar-check fa-lg"></i>
             </div>
@@ -21,7 +21,7 @@
         </a>
 
         <!-- Card 2 -->
-        <a href="#" class="bg-white rounded-lg shadow hover:shadow-lg transition p-6 flex items-center">
+        <a href="{{ route('registrasi-event.index') }}" class="bg-white rounded-lg shadow hover:shadow-lg transition p-6 flex items-center">
             <div class="p-3 rounded-full bg-green-100 text-green-600 mr-4">
                 <i class="fa-solid fa-users fa-lg"></i>
             </div>
@@ -32,54 +32,57 @@
         </a>
 
         <!-- Card 3 -->
-        <a href="#" class="bg-white rounded-lg shadow hover:shadow-lg transition p-6 flex items-center">
+        <a href="{{ route('laporan-event.index') }}" class="bg-white rounded-lg shadow hover:shadow-lg transition p-6 flex items-center">
             <div class="p-3 rounded-full bg-yellow-100 text-yellow-600 mr-4">
-                <i class="fa-solid fa-chart-line fa-lg"></i>
+                <i class="fa-solid fa-file-alt fa-lg"></i>
             </div>
             <div>
                 <p class="text-gray-600">Laporan</p>
-                <p class="text-lg font-bold">Statistik event</p>
+                <p class="text-lg font-bold">Laporan & Cetak</p>
             </div>
         </a>
     </div>
 
     <!-- Event Mendatang -->
-    <div>
-        <h3 class="text-xl font-bold mb-4">📅 Event Mendatang</h3>
-        <div class="space-y-4">
-            <!-- Event Card -->
-            <div class="bg-white rounded-lg shadow p-4 flex items-center justify-between">
-                <div class="flex items-center">
-                    <div class="p-3 rounded-full bg-indigo-100 text-indigo-600 mr-4">
-                        <i class="fa-solid fa-bullhorn fa-lg"></i>
-                    </div>
-                    <div>
-                        <p class="font-bold">Seminar Teknologi 2025</p>
-                        <p class="text-sm text-gray-500">10 Oktober 2025 • Jakarta</p>
-                    </div>
-                </div>
-                <a href="#" class="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition">
-                    Cek Registrasi
-                </a>
-            </div>
+<div>
+    <h3 class="text-xl font-bold mb-4">
+        <i class="fas fa-calendar"></i> Event Mendatang
+    </h3>
 
-            <!-- Event Card -->
-            <div class="bg-white rounded-lg shadow p-4 flex items-center justify-between">
-                <div class="flex items-center">
-                    <div class="p-3 rounded-full bg-green-100 text-green-600 mr-4">
-                        <i class="fa-solid fa-microphone fa-lg"></i>
+    @if ($eventMendatang->count() > 0)
+        <div class="space-y-4">
+            @foreach ($eventMendatang as $event)
+                <div class="bg-white rounded-lg shadow p-4 flex items-center justify-between">
+                    <div class="flex items-center">
+                        <div class="p-3 rounded-full 
+                            {{ $loop->iteration % 2 == 0 ? 'bg-green-100 text-green-600' : 'bg-indigo-100 text-indigo-600' }} 
+                            mr-4">
+                            <i class="{{ $loop->iteration % 2 == 0 ? 'fa-solid fa-microphone' : 'fa-solid fa-bullhorn' }} fa-lg"></i>
+                        </div>
+
+                        <div>
+                            <p class="font-bold">{{ $event->title }}</p>
+                            <p class="text-sm text-gray-500">
+                                {{ \Carbon\Carbon::parse($event->tanggal_event)->translatedFormat('d F Y') }} • 
+                                {{ $event->location ?? '-' }}
+                            </p>
+                        </div>
                     </div>
-                    <div>
-                        <p class="font-bold">Workshop UI/UX</p>
-                        <p class="text-sm text-gray-500">15 Oktober 2025 • Bandung</p>
-                    </div>
+
+                    <a href="{{ route('registrasi-event.detail', $event->slug) }}"
+                       class="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition">
+                        Cek Registrasi
+                    </a>
                 </div>
-                <a href="#" class="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition">
-                    Cek Registrasi
-                </a>
-            </div>
+            @endforeach
         </div>
-    </div>
+    @else
+        <div class="bg-gray-50 text-gray-500 text-center p-6 rounded-lg shadow">
+            Belum ada event mendatang.
+        </div>
+    @endif
+</div>
+
 </div>
 
 @endsection

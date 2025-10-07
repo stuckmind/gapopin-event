@@ -42,12 +42,14 @@ class ManagementEventController extends Controller
             'poster'     => 'required|image|mimes:jpg,jpeg,png|max:2048',
             'title'      => 'required|string|max:255',
             'location'   => 'required|string|max:255',
-            'tanggal'    => 'required|date'
+            'tanggal'    => 'required|date',
+            'file_name_tag' => 'required|image|mimes:jpg,jpeg,png|max:2048'
         ]);
 
         // Upload poster
         $posterPath = $request->file('poster')->store('posters', 'public');
-        $kodeEvent = strtoupper(str_replace(' ', '-', $request->title)) . '-' . uniqid();
+        $nameTagPath = $request->file('file_name_tag')->store('name_tag', 'public');
+        $kodeEvent = strtoupper(str_replace(' ', '-', $request->title) . '-' . uniqid());
         Event::create([
             'kode_event' => $kodeEvent,
             'poster'     => $posterPath,
@@ -55,6 +57,7 @@ class ManagementEventController extends Controller
             'slug'       => Str::slug($request->title),
             'location'   => $request->location,
             'tanggal'    => $request->tanggal,
+            'file_name_tag' => $nameTagPath
         ]);
 
         return redirect()->route('management-event.index')

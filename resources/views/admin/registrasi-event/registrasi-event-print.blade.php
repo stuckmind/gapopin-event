@@ -16,7 +16,7 @@
             font-family: 'Arial', sans-serif;
             width: 148mm;
             height: 210mm;
-            background: url("{{ asset('assets/name-tag.png') }}") no-repeat center top;
+            background: url("{{ asset('storage/ . $registrasi->event->file_name_tag') }}") no-repeat center top;
             background-size: 100% 100%;
         }
 
@@ -52,7 +52,7 @@
         <div class="info-box">
             <div>{{ strtoupper($registrasi->nama) }}</div>
             <div>{{ strtoupper($registrasi->nama_optik) }}</div>
-            <div style="margin-left: 9mm;">{{ strtoupper($registrasi->alamat) }}</div>
+            <div style="margin-left: 9mm;">{{ strtoupper($registrasi->wilayah) }}</div>
         </div>
     </div>
 

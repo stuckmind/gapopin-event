@@ -14,6 +14,14 @@
             @error('poster') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
         </div>
 
+        <!-- Name Tag -->
+        <div>
+            <label class="block text-sm font-medium text-gray-700">Name Tag</label>
+            <input type="file" name="file_name_tag" accept="image/*"
+                   class="mt-1 w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+            @error('file_name_tag') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
+        </div>
+
         <!-- Title -->
         <div>
             <label class="block text-sm font-medium text-gray-700">Title</label>

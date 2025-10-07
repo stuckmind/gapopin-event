@@ -12,7 +12,7 @@
                 <nav class="hidden md:flex space-x-6">
                     <a href="/" class="text-gray-600 hover:text-blue-600">Beranda</a>
                     <a href="#events" class="text-gray-600 hover:text-blue-600">Event</a>
-                    <a href="#about" class="text-gray-600 hover:text-blue-600">Registrasi</a>
+                    <a href="{{ route('registrasi.search') }}" class="text-gray-600 hover:text-blue-600">Registrasi</a>
                     <a href="#contact" class="text-gray-600 hover:text-blue-600">Kontak</a>
                 </nav>
             </div>
