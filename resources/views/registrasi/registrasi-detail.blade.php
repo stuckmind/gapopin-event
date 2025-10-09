@@ -13,7 +13,8 @@
 
         <!-- Nama Peserta & Optik -->
         <div class="text-gray-700 text-lg">
-            {{ $registrasi->nama }} - {{ $registrasi->nama_optik }}
+            <p>{{ $registrasi->nama }} - {{ $registrasi->nama_optik }}</p>
+            <p class="text-sm">{{ $registrasi->wilayah }}</p>
         </div>
         
         <!-- QR Code -->

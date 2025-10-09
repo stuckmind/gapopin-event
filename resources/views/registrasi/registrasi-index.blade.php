@@ -1,6 +1,6 @@
 @extends('template.header')
 @section('body')
-<div class="min-h-screen w-full flex items-center justify-center bg-gray-100 px-4">
+<div class="min-h-screen w-full flex items-center justify-center bg-indigo-300 px-4">
     <div class="bg-white shadow-lg rounded-2xl p-8 max-w-md w-full">
         <div class="text-center mb-6">
             <i class="fa-solid fa-magnifying-glass text-indigo-600 text-4xl mb-2"></i>

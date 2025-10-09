@@ -10,7 +10,7 @@ class RegistrasiEvent extends Model
     use HasFactory;
     protected $guarded = ['id'];
 
-    public function event()
+    public function events()
     {
         return $this->belongsTo(Event::class, 'kode_event', 'kode_event');
     }

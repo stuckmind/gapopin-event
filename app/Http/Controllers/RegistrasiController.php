@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Event;
 use Illuminate\Http\Request;
 use App\Models\RegistrasiEvent;
+use App\Events\RegistrasiCreated;
+use App\Events\RegistrasiSendEvent;
 
 class RegistrasiController extends Controller
 {
@@ -51,7 +53,29 @@ class RegistrasiController extends Controller
             'wilayah' => $request->address,
         ]);
 
+        event(new RegistrasiSendEvent($registrasi));
+
         return redirect()->route('registrasi.detail', $kode_registrasi);
+    }
+
+    public function searchProcess(Request $request)
+    {
+        $request->validate([
+            'keyword' => 'required|string|max:100',
+        ]);
+
+        $keyword = trim($request->keyword);
+
+        $registrasi = RegistrasiEvent::where('nama', 'LIKE', "%$keyword%")
+            ->orWhere('email', 'LIKE', "%$keyword%")
+            ->orWhere('kode_registrasi', 'LIKE', "%$keyword%")
+            ->first();
+
+        if ($registrasi) {
+            return redirect()->route('registrasi.detail', $registrasi->id);
+        }
+
+        return back()->with('error', 'Data registrasi tidak ditemukan.');
     }
 
     public function detail($kode_registrasi)

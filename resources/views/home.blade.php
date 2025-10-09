@@ -50,7 +50,7 @@
 
                         <div class="flex items-center text-gray-500 text-sm mb-1">
                             <i class="fas fa-calendar-alt mr-2"></i>
-                            {{ \Carbon\Carbon::parse($event->tanggal)->format('d M Y') }}
+                            {{ \Carbon\Carbon::parse($event->tanggal)->locale('id')->translatedFormat('d F Y') }}
                         </div>
                         <div class="flex items-center text-gray-500 text-sm mb-4">
                             <i class="fas fa-map-marker-alt mr-2"></i>

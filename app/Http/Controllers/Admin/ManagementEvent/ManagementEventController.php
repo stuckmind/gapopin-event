@@ -80,16 +80,22 @@ class ManagementEventController extends Controller
     {
         $event = Event::findOrFail($id);
 
-        // bikin QR dengan isi link detail event
+        // Buat QR code dengan link ke form registrasi event
+        $url = route('registrasi.form', $event->slug);
+
+        // ✅ Tambahkan background putih dan margin biar mudah discan
         $qrCode = QrCode::format('png')
-            ->size(300)
-            ->generate(route('management-event.show', $event->id));
+            ->size(300)                  // ukuran QR utama
+            ->margin(2)                  // ruang putih di sekeliling QR
+            ->backgroundColor(255, 255, 255) // background putih
+            ->color(0, 0, 0)             // warna kode hitam
+            ->generate($url);
 
         $fileName = 'qrcode-event-' . $event->kode_event . '.png';
 
         return Response::make($qrCode, 200, [
             'Content-Type' => 'image/png',
-            'Content-Disposition' => 'attachment; filename="' . $fileName . '"'
+            'Content-Disposition' => 'inline; filename="' . $fileName . '"'
         ]);
     }
 

@@ -45,11 +45,11 @@
                             </td>
                             <td class="px-4 py-3 text-center">
                                 @if ($item->kehadiran)
-                                    <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-semibold">
+                                    <span class="inline-flex items-center bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-semibold">
                                         Hadir
                                     </span>
                                 @else
-                                    <span class="bg-red-100 text-red-700 px-3 py-1 rounded-full text-xs font-semibold">
+                                    <span class="inline-flex items-center bg-red-100 text-red-700 px-3 py-1 rounded-full text-xs font-semibold">
                                         Belum Hadir
                                     </span>
                                 @endif

@@ -39,7 +39,7 @@
 <body>
 
     <h2>Laporan Registrasi Event</h2>
-    <p>{{ $event->title }} — {{ $event->kode_event }}</p>
+    <p>{{ $event->title }}</p>
 
     <table>
         <thead>

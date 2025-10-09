@@ -63,7 +63,7 @@
                         <div>
                             <p class="font-bold">{{ $event->title }}</p>
                             <p class="text-sm text-gray-500">
-                                {{ \Carbon\Carbon::parse($event->tanggal_event)->translatedFormat('d F Y') }} • 
+                                {{ \Carbon\Carbon::parse($event->tanggal)->translatedFormat('d F Y') }} • 
                                 {{ $event->location ?? '-' }}
                             </p>
                         </div>

@@ -16,7 +16,7 @@
             font-family: 'Arial', sans-serif;
             width: 148mm;
             height: 210mm;
-            background: url("{{ asset('storage/ . $registrasi->event->file_name_tag') }}") no-repeat center top;
+            background: url("{{ asset('storage/' . $registrasi->events->file_name_tag) }}") no-repeat center top;
             background-size: 100% 100%;
         }
 

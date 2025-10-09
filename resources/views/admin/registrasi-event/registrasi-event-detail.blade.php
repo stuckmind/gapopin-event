@@ -1,3 +1,4 @@
+@vite(['resources/js/event-registrasi/event-registrasi-pusher.js'])
 @extends('admin.template.layout')
 @section('content')
 <div class="bg-white space-y-6 p-6">
@@ -44,11 +45,11 @@
                             </td>
                             <td class="px-4 py-3 text-center">
                                 @if ($item->kehadiran)
-                                    <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-semibold">
+                                    <span class="inline-flex items-center bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-semibold">
                                         Hadir
                                     </span>
                                 @else
-                                    <span class="bg-red-100 text-red-700 px-3 py-1 rounded-full text-xs font-semibold">
+                                    <span class="inline-flex items-center bg-red-100 text-red-700 px-3 py-1 rounded-full text-xs font-semibold">
                                         Belum Hadir
                                     </span>
                                 @endif
@@ -104,99 +105,99 @@
 
 <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-    const modal = document.getElementById('scannerModal');
-    const openBtn = document.getElementById('openScanner');
-    const closeBtn = document.getElementById('closeScanner');
-    const scanStatus = document.getElementById('scanStatus');
-    let html5QrCode;
+    document.addEventListener('DOMContentLoaded', () => {
+        const modal = document.getElementById('scannerModal');
+        const openBtn = document.getElementById('openScanner');
+        const closeBtn = document.getElementById('closeScanner');
+        const scanStatus = document.getElementById('scanStatus');
+        let html5QrCode;
 
-    openBtn.addEventListener('click', () => {
-        modal.classList.remove('hidden');
-        startScanner();
-    });
-
-    closeBtn.addEventListener('click', () => {
-        stopScanner();
-        modal.classList.add('hidden');
-    });
-
-    function startScanner() {
-        html5QrCode = new Html5Qrcode("reader");
-        const config = { fps: 10, qrbox: { width: 250, height: 250 } };
-        html5QrCode.start(
-            { facingMode: "environment" },
-            config,
-            qrCodeSuccessCallback,
-            qrCodeErrorCallback
-        ).catch(err => {
-            scanStatus.textContent = "Gagal membuka kamera: " + err;
+        openBtn.addEventListener('click', () => {
+            modal.classList.remove('hidden');
+            startScanner();
         });
-    }
 
-    function stopScanner() {
-        if (html5QrCode) {
-            html5QrCode.stop().then(() => {
-                html5QrCode.clear();
+        closeBtn.addEventListener('click', () => {
+            stopScanner();
+            modal.classList.add('hidden');
+        });
+
+        function startScanner() {
+            html5QrCode = new Html5Qrcode("reader");
+            const config = { fps: 10, qrbox: { width: 250, height: 250 } };
+            html5QrCode.start(
+                { facingMode: "environment" },
+                config,
+                qrCodeSuccessCallback,
+                qrCodeErrorCallback
+            ).catch(err => {
+                scanStatus.textContent = "Gagal membuka kamera: " + err;
             });
         }
-    }
 
-    async function qrCodeSuccessCallback(decodedText) {
-    stopScanner();
-    scanStatus.textContent = "QR terbaca: " + decodedText;
-
-        try {
-            const response = await fetch("{{ route('registrasi-event.scan') }}", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
-                },
-                body: JSON.stringify({ kode_registrasi: decodedText })
-            });
-
-            const result = await response.json();
-
-            if (result.success) {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Berhasil!',
-                    text: 'Kehadiran dikonfirmasi untuk: ' + result.nama,
-                    showConfirmButton: false,
-                    timer: 2000,
-                    timerProgressBar: true
-                }).then(() => {
-                    window.location.reload();
+        function stopScanner() {
+            if (html5QrCode) {
+                html5QrCode.stop().then(() => {
+                    html5QrCode.clear();
                 });
-            } else {
+            }
+        }
+
+        async function qrCodeSuccessCallback(decodedText) {
+        stopScanner();
+        scanStatus.textContent = "QR terbaca: " + decodedText;
+
+            try {
+                const response = await fetch("{{ route('registrasi-event.scan') }}", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                    },
+                    body: JSON.stringify({ kode_registrasi: decodedText })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Berhasil!',
+                        text: 'Kehadiran dikonfirmasi untuk: ' + result.nama,
+                        showConfirmButton: false,
+                        timer: 2000,
+                        timerProgressBar: true
+                    }).then(() => {
+                        window.location.reload();
+                    });
+                } else {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Gagal!',
+                        text: result.message,
+                        showConfirmButton: false,
+                        timer: 2500,
+                        timerProgressBar: true
+                    }).then(() => {
+                        startScanner();
+                    });
+                }
+            } catch (error) {
                 Swal.fire({
-                    icon: 'warning',
-                    title: 'Gagal!',
-                    text: result.message,
-                    showConfirmButton: false,
-                    timer: 2500,
-                    timerProgressBar: true
+                    icon: 'error',
+                    title: 'Terjadi Kesalahan',
+                    text: error,
+                    showConfirmButton: true
                 }).then(() => {
                     startScanner();
                 });
             }
-        } catch (error) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Terjadi Kesalahan',
-                text: error,
-                showConfirmButton: true
-            }).then(() => {
-                startScanner();
-            });
         }
-    }
 
-    function qrCodeErrorCallback(errorMessage) {
-        // biarkan kosong biar ga spam di console
-    }
-});
+        function qrCodeErrorCallback(errorMessage) {
+            // biarkan kosong biar ga spam di console
+        }
+    });
 </script>
 
 @endsection
