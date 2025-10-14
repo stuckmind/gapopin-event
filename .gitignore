@@ -18,13 +18,16 @@
 # /.vscode
 
 # ==========================
-# LARAVEL DEPLOY VERSION
+# LARAVEL + NPM DEPLOY VERSION
 # ==========================
 
-# Node & build assets
+# Node & build cache
 /node_modules
 /public/hot
-/public/build
+
+# ⚠️ JANGAN IGNORE BUILD HASILNYA
+# /public/build DIBIARKAN SUPAYA IKUT DEPLOY
+# (hasil dari npm run build)
 
 # Environment & keys
 .env
@@ -57,6 +60,7 @@ bootstrap/cache/*.php
 
 # ==========================
 # NOTE:
-# /vendor **tidak di-ignore** agar bisa ikut ke GitHub
-# Ini karena hosting kamu tidak bisa install composer
+# /vendor TIDAK DI-IGNORE
+# /public/build TIDAK DI-IGNORE
+# Karena hosting kamu tidak bisa install composer / npm
 # ==========================
