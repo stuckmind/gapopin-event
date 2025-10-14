@@ -1,13 +1,37 @@
-/.phpunit.cache
+# /.phpunit.cache
+# /node_modules
+# /public/build
+# /public/hot
+# /public/storage
+# /storage/*.key
+# /vendor
+# .env
+# .env.backup
+# .env.production
+# Homestead.json
+# Homestead.yaml
+# auth.json
+# npm-debug.log
+# yarn-error.log
+# /.fleet
+# /.idea
+# /.vscode
+
+# ==========================
+# LARAVEL DEPLOY VERSION
+# ==========================
+
+# Node & build assets
 /node_modules
-/public/build
 /public/hot
-/public/storage
-/storage/*.key
-/vendor
+/public/build
+
+# Environment & keys
 .env
-.env.backup
-.env.production
+.env.*
+/storage/*.key
+
+# Local development & tools
 Homestead.json
 Homestead.yaml
 auth.json
@@ -16,3 +40,23 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
+
+# PHPUnit & tests
+.phpunit.cache
+/tests
+
+# Laravel cache (akan dibangun otomatis)
+bootstrap/cache/*.php
+
+# Temporary files
+/public/storage
+/storage/framework/cache/data
+/storage/logs/*.log
+/storage/framework/sessions/*
+/storage/framework/views/*
+
+# ==========================
+# NOTE:
+# /vendor **tidak di-ignore** agar bisa ikut ke GitHub
+# Ini karena hosting kamu tidak bisa install composer
+# ==========================
